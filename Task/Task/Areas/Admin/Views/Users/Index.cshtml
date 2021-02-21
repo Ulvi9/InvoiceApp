@@ -1,0 +1,138 @@
+﻿@model IEnumerable<User>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int Count = 0;
+}
+
+<div>
+    <a class="btn btn-success my-4" asp-action="Create">Create User</a>
+    <a class="btn btn-danger mr-4" asp-action="DeleteList">Deleted Users</a>
+</div>
+<partial name="_PartialSuccess" />
+
+<form class="my-4" method="get" asp-action="Index">
+    <input autocomplete="off" placeholder="Search" type="text" name="name" />
+    <input type="submit" value="search" />
+</form>
+
+<div class="">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Full Name
+                            </th>
+                            <th>
+                                UserName
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Isactivated
+                            </th>
+                            <th>
+                                Settings
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            Count++;
+                            <tr>
+                                <td>
+                                    @Count
+                                </td>
+                                <td>
+                                    <a asp-controller="User" asp-action="UserDetail" asp-route-id="@user.Id"> @user.Name</a>
+                                </td>
+                                <td>
+                                    @user.UserName
+                                </td>
+                                <td>
+                                    @user.Email
+                                </td>
+                                @if (user.IsActivated)
+                                {
+                                    <td style="color:lawngreen">
+                                        Active
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="color:red">
+                                        Disable
+                                    </td>
+                                }
+                            <td>
+                                @if (User.Identity.Name == user.UserName)
+                                {
+                                    @if (user.IsActivated)
+                                    {
+                                        <a asp-action="IsActivate" asp-route-id="@user.Id" class="btn btn-danger">
+                                            <i class="mdi mdi-account-off"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="Disable" asp-route-id="@user.Id" class="btn btn-success d-none">
+                                            <i class="mdi mdi-account-check"></i>
+                                        </a>
+                                    }
+                                }
+                                else
+                                {
+                                    if (user.IsActivated)
+                                    {
+                                        <a asp-action="Disable" asp-route-id="@user.Id" class="btn btn-success">
+                                            <i class="mdi mdi-account-check"></i>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-action="IsActivate" asp-route-id="@user.Id" class="btn btn-danger">
+                                            <i class="mdi mdi-account-off"></i>
+                                        </a>
+                                    }
+                                }
+                                <a asp-action="UpdateProfile" asp-route-id="@user.Id" class="btn btn-outline-secondary">
+                                    Update
+                                </a>
+                                <a asp-action="ChangePassword" asp-route-id="@user.Id" class="btn btn-warning">
+                                    <i class="mdi mdi-account-key"></i>
+                                </a>
+                                <a asp-action="DeleteUser" asp-route-id="@user.Id" class="btn btn-secondary">
+                                    <i class="mdi mdi-account-remove"></i>
+                                </a>
+                            </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    @for (int i = 1; i <= ViewBag.PageCount; i++)
+                    {
+                        if (ViewBag.Page == i)
+                        {
+                            <li class="page-item disabled"><a class="page-link" href="#">@i</a></li>
+                        }
+                        else
+                        {
+                            <li class="page-item"><a class="page-link" asp-area="Admin" asp-controller="User" asp-action="Index" asp-route-page="@i">@i</a></li>
+                        }
+                    }
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

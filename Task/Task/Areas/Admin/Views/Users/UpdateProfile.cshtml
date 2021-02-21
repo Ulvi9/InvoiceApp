@@ -1,0 +1,39 @@
+﻿@model User
+@{
+    ViewData["Title"] = "UpdateProfile";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-12 grid-margin">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Update Client</h4>
+            <form class="form-sample" method="post" enctype="multipart/form-data">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Name:</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Name" class="form-control" placeholder="Input Name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label">Surname:</label>
+                            <div class="col-sm-9">
+                                <input asp-for="Email" class="form-control" placeholder="Input Surname" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" name="name" value="Update" class="btn btn-success" />
+                <a asp-controller="User" asp-action="Index" class="btn btn-light">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,47 @@
+﻿@model Bio
+<header class="site-navbar py-4 js-sticky-header site-navbar-target bg-light" role="banner">
+    <div class="container">
+        <div class="d-flex align-items-center">
+            <div class="mr-auto">
+                <nav class="site-navigation" role="navigation">
+                    <ul class="site-menu main-menu js-clone-nav mr-auto d-none d-lg-block">
+                        @if (Model.Call != null)
+                        {
+                            <li class="active">
+                                <a href="#" class="small mr-3"><span class="icon-phone2 mr-2"></span> @Model.Call</a>
+                            </li>
+                        }
+                        <li>
+                            <a href="#" class="small mr-3"><span class="icon-envelope-o mr-2"></span> @Model.Email</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Home" asp-action="Index" class="nav-link text-left">Current Invoices</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Invoice" asp-action="Create" class="nav-link text-left">CreateInvoice</a>
+                        </li>
+                        <li>
+                            <a asp-controller="home" asp-action="DeletedList" class="nav-link text-left">DeletedInvoices</a>
+                        </li>
+                        <li>
+                            @if (!User.Identity.IsAuthenticated)
+                            {
+                                <a asp-controller="Account" asp-action="Login" class="small mr-3"><span class="icon-unlock"></span> Log In</a>
+                                <a asp-controller="Account" asp-action="Register" class="small btn btn-primary px-4 py-2 rounded-0"><span class="icon-users"></span> Register</a>
+                            }
+                            else
+                            {
+                                <a class="small mr-3"><span class="icon-lock2"></span>@ViewBag.User.Name</a>
+                                <a asp-controller="Account" asp-action="Logout" class="small mr-3"><span class="icon-lock2"></span> Log out</a>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="small btn btn-primary px-4 py-2 rounded-0"><span class=""></span>Admin</a>
+                                }
+                            }
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

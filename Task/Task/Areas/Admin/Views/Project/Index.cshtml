@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Project>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    int Count = 0;
+
+}
+
+<div>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <a asp-controller="Project" asp-action="Create" class="btn btn bg-success">Create New Project</a>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Settings
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody style="cursor:pointer">
+                        @foreach (Project project in Model)
+                        {
+                            Count++;
+                            <tr>
+                                <td>
+                                    @Count
+                                </td>
+                                <td>
+                                    @project.Name
+                                </td>
+                                <td>
+                                    <a asp-action="Update" asp-route-id="@project.Id" class="btn btn-success">
+                                        <i class="mdi mdi-settings"></i>
+                                    </a>
+                                    <a asp-action="DeletePost" asp-route-id="@project.Id" class="btn btn-danger">
+                                        <i class="mdi mdi-delete"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
